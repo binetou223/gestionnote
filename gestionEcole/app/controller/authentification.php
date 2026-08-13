@@ -8,6 +8,7 @@ function login(){
            $result=getUtilisateur($email);
 
            if(!empty($result) && $password ===$result['mot_de_passe']){
+// var_dump($result);
 
             setSession('conexion' , $result);
             header("Location:http://localhost:8000/");

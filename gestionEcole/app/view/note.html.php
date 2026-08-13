@@ -668,7 +668,7 @@ $utilisateur=$_SESSION['conexion'];
       <div class="user">
         <div class="avatar-user">FS</div>
         <div class="user-meta">
-          <div class="user-name"><?php echo  $utilisateur['prenom'] ?> </div>
+          <div class="user-name"><?php echo  $utilisateur['nom'] ?> <?php echo  $utilisateur['prenom'] ?> </div>
           <div class="user-role"><?php echo  $utilisateur['nomrole'] ?></div>
         </div>
         <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -731,7 +731,7 @@ $utilisateur=$_SESSION['conexion'];
             <select id="matiere" name="matiere">
               <?php $matieres = $matieres ?? [];
               foreach ($matieres as  $matiere) : ?>
-                <option value="<?php echo  $matiere['id'] ?>"><?php echo  $matiere['nom_matiere'] ?></option>
+                <option value="<?php echo  $matiere['id'] ?>"><?php echo  $matiere['nommatiere'] ?></option>
               <?php endforeach ?>
             </select>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -746,7 +746,7 @@ $utilisateur=$_SESSION['conexion'];
             <select id="periode" name="periode">
               <?php $periodes = $periodes ?? [];
               foreach ($periodes as  $periode) : ?>
-                <option value="<?php echo  $periode['id'] ?>"><?php echo  $periode['nom_periode'] ?></option>
+                <option value="<?php echo  $periode['id'] ?>"><?php echo  $periode['nomperiode'] ?></option>
               <?php endforeach ?>
             </select>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -769,7 +769,11 @@ $utilisateur=$_SESSION['conexion'];
 
         <div class="stat">
           <div class="stat-label">Moyenne de classe</div>
-          <div class="stat-value" id="classAvg"><span>/20</span></div>
+              <?php $moyenne = $moyenne ?? [];
+        //        var_dump( $moyenne );
+        // die;?>
+
+          <div class="stat-value" id="classAvg"><?php echo $moyenne['moyenne_generale'] ?> <span>/20</span></div>
         </div>
       </div>
     </form>
@@ -792,21 +796,21 @@ $utilisateur=$_SESSION['conexion'];
 
             <!-- Ligne élève 1 (exemple statique — à boucler en PHP) -->
             <tbody id="tbody">
-  <?php $evaluations = $evaluations ?? []; $i = 1; ?>
+  <?php $evaluations = $evaluations ?? [];  ?>
   <?php foreach ($evaluations as $ligne) : ?>
     <tr>
       <td>
         <div class="eleve-cell">
-          <div class="idx"><?php echo $i++ ?></div>
+          <div class="idx"><?php echo $ligne['evid'] ?></div>
           <div>
-            <div class="eleve-name"><?php echo $ligne['eleve'] ?></div>
-            <div class="eleve-id"><?php echo $ligne['ref'] ?></div>
+            <div class="eleve-name"><?php echo $ligne['prenom'] ?> <?php echo $ligne['nom'] ?></div>
+            <div class="eleve-id"><?php echo $ligne['matricule'] ?></div>
           </div>
         </div>
       </td>
-      <td><input class="grade-input" type="number" min="0" max="20" step="0.5" value="<?php echo $ligne['devoir1'] ?>" name="notes[<?php echo $ligne['id_eleve'] ?>][d1]"></td>
-      <td><input class="grade-input" type="number" min="0" max="20" step="0.5" value="<?php echo $ligne['devoir2'] ?>" name="notes[<?php echo $ligne['id_eleve'] ?>][d2]"></td>
-      <td><input class="grade-input comp" type="number" min="0" max="20" step="0.5" value="<?php echo $ligne['composition'] ?>" name="notes[<?php echo $ligne['id_eleve'] ?>][comp]"></td>
+      <td><input class="grade-input" type="number" min="0" max="20" step="0.5" value="<?php echo $ligne['devoir1'] ?>" name="notes[<?php echo $ligne['evid'] ?>][d1]"></td>
+      <td><input class="grade-input" type="number" min="0" max="20" step="0.5" value="<?php echo $ligne['devoir2'] ?>" name="notes[<?php echo $ligne['evid'] ?>][d2]"></td>
+      <td><input class="grade-input comp" type="number" min="0" max="20" step="0.5" value="<?php echo $ligne['composition'] ?>" name="notes[<?php echo $ligne['evid'] ?>][comp]"></td>
       <td><span class="moyenne-val"><?php echo $ligne['moyenne'] ?></span></td>
       <td><span class="pill"><span class="pdot"></span><?php echo $ligne['appreciation'] ?></span></td>
     </tr>

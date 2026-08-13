@@ -9,11 +9,16 @@ function affichevue()
     $matieres = getAllMatiere();
     $periodes = getAllPeriode();
     $classes  = getAllClasse();
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $id_period = $_POST['periode'];
-        $id_classe = $_POST['classe'];
-        $id_matiere = $_POST['matiere'];
-        $moyen = calcul_moyen($id_period, $id_classe, $id_matiere);
+    $moyenne  = null;
+     $evaluations=[];
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['periode'], $_POST['classe'], $_POST['matiere'])) {
+        $id_period  = (int) $_POST['periode'];
+        $id_classe  = (int) $_POST['classe'];
+        $id_matiere = (int) $_POST['matiere'];
+        $moyenne = calcul_moyen($id_period, $id_classe, $id_matiere);
+        $evaluations=getAllEval($id_period,  $id_classe,  $id_matiere );
+
     }
 
     require_once dirname(__DIR__) . "/view/note.html.php";

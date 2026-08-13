@@ -6,7 +6,7 @@ function connexionDB(): PDO {
     if ($pdo === null) {
         try {
             $pdo = new PDO(
-                "pgsql:host=localhost;dbname=gestionnote;port=5432",
+                "pgsql:host=localhost;dbname=gestionnotewane;port=5432",
                 "postgres",
                 "postgres"
             );
