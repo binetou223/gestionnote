@@ -34,10 +34,6 @@ function calcul_moyen(int $id_period, int $id_classe, int $id_matiere): float {
 
     $resulte = executeQuery($pdo, $sql, $data, true);
 
-    // Gestion du cas où aucune donnée n'est trouvée
-    if (!$resulte || !isset($resulte['moyenne_generale']) || $resulte['moyenne_generale'] === null) {
-        return 0.0;
-    }
     $pdo=null;
 
     return (float) $resulte['moyenne_generale'];
